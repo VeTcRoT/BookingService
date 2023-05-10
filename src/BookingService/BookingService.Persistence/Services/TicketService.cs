@@ -17,23 +17,27 @@ namespace BookingService.Persistence.Services
 
         public async Task<string> GenerateTicket(int userId, RideConfirmationDto rideDto)
         {
-            User user = await _unitOfWork.UserRepository.GetByIdAsync(userId);
-            string userPassword = user.Password;
+            //User user = await _unitOfWork.UserRepository.GetByIdAsync(userId);
+            //string userPassword = user.Password;
 
-            string serializedTicket = JsonSerializer.Serialize(rideDto);
+            //string serializedTicket = JsonSerializer.Serialize(rideDto);
 
-            return Math.Abs(userPassword.ToString().GetHashCode()).ToString() + serializedTicket.GetHashCode().ToString();
+            //return Math.Abs(userPassword.ToString().GetHashCode()).ToString() + serializedTicket.GetHashCode().ToString();
+
+            throw new NotImplementedException();
         }
 
         public async Task<bool> IsValid(int userId, string ticket)
         {
-            User user = await _unitOfWork.UserRepository.GetByIdAsync(userId);
-            string userPassword = user.Password;
+            //User user = await _unitOfWork.UserRepository.GetByIdAsync(userId);
+            //string userPassword = user.Password;
 
-            if (ticket.Contains(Math.Abs(userPassword.ToString().GetHashCode()).ToString()))
-                return true;
+            //if (ticket.Contains(Math.Abs(userPassword.ToString().GetHashCode()).ToString()))
+            //    return true;
 
-            return false;
+            //return false;
+
+            throw new NotImplementedException();
         }
     }
 }
