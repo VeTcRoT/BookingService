@@ -3,12 +3,14 @@ using BookingService.Application.Features.Users.Commands.DeleteUser;
 using BookingService.Application.Features.Users.Commands.UpdateUser;
 using BookingService.Application.Features.Users.Queries.GetUserById;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookingService.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UsersController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -18,6 +20,7 @@ namespace BookingService.Api.Controllers
             _mediator = mediator;
         }
 
+        [AllowAnonymous]
         [HttpGet("{userId}", Name = "GetUserById")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]

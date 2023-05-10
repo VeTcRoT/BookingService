@@ -2,12 +2,14 @@
 using BookingService.Application.Features.Rides.Queries.GeAvailableRoutes;
 using BookingService.Application.Features.Rides.Queries.ValidateTicket;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookingService.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class RidesController : ControllerBase
     {
         private readonly IMediator _mediator;
