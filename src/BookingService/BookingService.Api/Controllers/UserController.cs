@@ -31,6 +31,7 @@ namespace BookingService.Api.Controllers
             return Ok(user);
         }
 
+        [AllowAnonymous]
         [HttpPost(Name = "CreateUser")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
