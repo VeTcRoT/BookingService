@@ -19,6 +19,13 @@ namespace BookingService.Persistence.Repositories
             return false;
         }
 
+        public async Task<User?> GetUserByEmailAsync(string email)
+        {
+            var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == email);
+
+            return user;
+        }
+
         public async Task<IEnumerable<Ride>?> GetUserRidesAsync(int userId)
         {
             var user = await _dbContext.Users.Include(u => u.Rides).FirstOrDefaultAsync(u => u.UserId == userId);

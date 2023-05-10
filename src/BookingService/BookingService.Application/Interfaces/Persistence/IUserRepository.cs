@@ -6,5 +6,6 @@ namespace BookingService.Application.Interfaces.Persistence
     {
         Task<IEnumerable<Ride>> GetUserRidesAsync(int userId);
         Task<bool> EmailAlreadyExists(string email);
+        Task<User?> GetUserByEmailAsync(string email);
     }
 }
