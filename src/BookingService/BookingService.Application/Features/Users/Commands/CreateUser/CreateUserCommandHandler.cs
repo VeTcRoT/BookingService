@@ -10,11 +10,13 @@ namespace BookingService.Application.Features.Users.Commands.CreateUser
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IPasswordHash _passwordHash;
 
-        public CreateUserCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public CreateUserCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IPasswordHash passwordHash)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _passwordHash = passwordHash;
         }
 
         public async Task<CreateUserDto> Handle(CreateUserCommand request, CancellationToken cancellationToken)
@@ -25,9 +27,19 @@ namespace BookingService.Application.Features.Users.Commands.CreateUser
             if (validationResult.Errors.Count > 0)
                 throw new ValidationException(validationResult);
 
-            var user = await _unitOfWork.UserRepository.AddAsync(_mapper.Map<User>(request));
+            var mappedUser = _mapper.Map<User>(request);
 
-            return _mapper.Map<CreateUserDto>(user);
+            var passwordHash = _passwordHash.HashPassword(request.Password, out byte[] salt);
+
+            mappedUser.PasswordSalt = Convert.ToHexString(salt);
+            mappedUser.PasswordHash = passwordHash;
+
+            var user = await _unitOfWork.UserRepository.AddAsync(mappedUser);
+
+            var userToReturn = _mapper.Map<CreateUserDto>(user);
+            userToReturn.Password = request.Password;
+
+            return userToReturn;
         }
     }
 }

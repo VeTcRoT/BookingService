@@ -1,4 +1,5 @@
 ﻿using BookingService.Application.Interfaces.Persistence;
+using BookingService.Persistence.Models;
 using BookingService.Persistence.Repositories;
 using BookingService.Persistence.Services;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +16,8 @@ namespace BookingService.Persistence
             {
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
             });
+
+            services.AddSingleton<IPasswordHash, PasswordHash>();
 
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 
