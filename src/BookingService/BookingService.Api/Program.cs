@@ -3,17 +3,24 @@ using BookingService.Application;
 using BookingService.Infrastructure;
 using BookingService.Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddDbContext<BookingServiceDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
+
 builder.Services.AddApplicationServices();
 
 builder.Services.AddInfrastructureServices(builder.Configuration);
 
-builder.Services.AddPersistenceServices(builder.Configuration);
+builder.Services.AddPersistenceServices();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

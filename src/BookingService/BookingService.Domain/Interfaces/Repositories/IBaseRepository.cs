@@ -1,6 +1,4 @@
-﻿using BookingService.Domain.Entities;
-
-namespace BookingService.Application.Interfaces.Persistence
+﻿namespace BookingService.Domain.Interfaces.Repositories
 {
     public interface IBaseRepository<T> where T : class
     {

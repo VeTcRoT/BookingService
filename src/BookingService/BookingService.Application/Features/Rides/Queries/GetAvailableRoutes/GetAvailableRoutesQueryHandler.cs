@@ -1,6 +1,6 @@
 ﻿using BookingService.Application.Exceptions;
 using BookingService.Application.Features.Rides.Queries.GetAvailableRoutes;
-using BookingService.Application.Interfaces.Infrastructure;
+using BookingService.Application.Interfaces.Services.Infrastructure;
 using MediatR;
 
 namespace BookingService.Application.Features.Rides.Queries.GeAvailableRoutes

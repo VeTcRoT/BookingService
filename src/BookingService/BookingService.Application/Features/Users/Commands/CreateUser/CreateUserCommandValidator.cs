@@ -1,6 +1,5 @@
-﻿using BookingService.Application.Interfaces.Persistence;
+﻿using BookingService.Domain.Interfaces.Repositories;
 using FluentValidation;
-using FluentValidation.Validators;
 
 namespace BookingService.Application.Features.Users.Commands.CreateUser
 {

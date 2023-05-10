@@ -1,4 +1,4 @@
-﻿using BookingService.Application.Interfaces.Persistence;
+﻿using BookingService.Application.Interfaces.Services.Infrastructure;
 using MediatR;
 
 namespace BookingService.Application.Features.Rides.Queries.ValidateTicket

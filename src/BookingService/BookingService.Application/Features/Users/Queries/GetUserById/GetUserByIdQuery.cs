@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using BookingService.Domain.Dtos;
+using MediatR;
 
 namespace BookingService.Application.Features.Users.Queries.GetUserById
 {

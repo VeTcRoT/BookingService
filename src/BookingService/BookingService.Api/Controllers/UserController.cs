@@ -2,6 +2,7 @@
 using BookingService.Application.Features.Users.Commands.DeleteUser;
 using BookingService.Application.Features.Users.Commands.UpdateUser;
 using BookingService.Application.Features.Users.Queries.GetUserById;
+using BookingService.Domain.Dtos;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -34,7 +35,7 @@ namespace BookingService.Api.Controllers
         [HttpPost(Name = "CreateUser")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
-        public async Task<ActionResult<CreateUserDto>> CreateUser([FromBody] CreateUserCommand createUserCommand)
+        public async Task<ActionResult<CreateUserResponseDto>> CreateUser([FromBody] CreateUserCommand createUserCommand)
         {
             var createUser = await _mediator.Send(createUserCommand);
 

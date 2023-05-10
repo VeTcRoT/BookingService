@@ -1,8 +1,8 @@
-﻿using BookingService.Application.Interfaces.Persistence;
+﻿using BookingService.Application.Interfaces.Services.Infrastructure;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace BookingService.Persistence.Services
+namespace BookingService.Infrastructure.Services
 {
     public class PasswordService : IPasswordService
     {

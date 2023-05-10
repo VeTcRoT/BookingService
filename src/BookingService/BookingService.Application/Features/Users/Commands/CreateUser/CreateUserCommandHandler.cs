@@ -1,12 +1,13 @@
 ﻿using AutoMapper;
 using BookingService.Application.Exceptions;
-using BookingService.Application.Interfaces.Persistence;
+using BookingService.Application.Interfaces.Services.Infrastructure;
 using BookingService.Domain.Entities;
+using BookingService.Domain.Interfaces.Repositories;
 using MediatR;
 
 namespace BookingService.Application.Features.Users.Commands.CreateUser
 {
-    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, CreateUserDto>
+    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, CreateUserResponseDto>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -19,7 +20,7 @@ namespace BookingService.Application.Features.Users.Commands.CreateUser
             _passwordHash = passwordHash;
         }
 
-        public async Task<CreateUserDto> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+        public async Task<CreateUserResponseDto> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
             var validator = new CreateUserCommandValidator(_unitOfWork.UserRepository);
             var validationResult = await validator.ValidateAsync(request);
@@ -36,10 +37,7 @@ namespace BookingService.Application.Features.Users.Commands.CreateUser
 
             var user = await _unitOfWork.UserRepository.AddAsync(mappedUser);
 
-            var userToReturn = _mapper.Map<CreateUserDto>(user);
-            userToReturn.Password = request.Password;
-
-            return userToReturn;
+            return _mapper.Map<CreateUserResponseDto>(user);
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using BookingService.Application.Interfaces.Persistence;
-using FluentValidation;
+﻿using FluentValidation;
 
 namespace BookingService.Application.Features.Users.Commands.UpdateUser
 {

@@ -1,4 +1,4 @@
-﻿namespace BookingService.Application.Interfaces.Persistence
+﻿namespace BookingService.Domain.Interfaces.Repositories
 {
     public interface IUnitOfWork : IDisposable
     {

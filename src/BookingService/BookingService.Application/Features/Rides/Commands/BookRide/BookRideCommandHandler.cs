@@ -1,20 +1,20 @@
 ﻿using AutoMapper;
 using BookingService.Application.Exceptions;
-using BookingService.Application.Interfaces.Infrastructure;
-using BookingService.Application.Interfaces.Persistence;
+using BookingService.Application.Interfaces.Services.Infrastructure;
 using BookingService.Domain.Entities;
+using BookingService.Domain.Interfaces.Repositories;
 using MediatR;
 
 namespace BookingService.Application.Features.Rides.Commands.BookRide
 {
-    public class BookRideQueryHandler : IRequestHandler<BookRideQuery, BookRideDto>
+    public class BookRideCommandHandler : IRequestHandler<BookRideCommand, BookRideDto>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ITicketService _ticketService;
         private readonly IRouteApiService _routeService;
         private readonly IMapper _mapper;
 
-        public BookRideQueryHandler(IUnitOfWork userRepository, IRouteApiService routeService, ITicketService ticketService, IMapper mapper)
+        public BookRideCommandHandler(IUnitOfWork userRepository, IRouteApiService routeService, ITicketService ticketService, IMapper mapper)
         {
             _unitOfWork = userRepository;
             _routeService = routeService;
@@ -22,7 +22,7 @@ namespace BookingService.Application.Features.Rides.Commands.BookRide
             _mapper = mapper;
         }
 
-        public async Task<BookRideDto> Handle(BookRideQuery request, CancellationToken cancellationToken)
+        public async Task<BookRideDto> Handle(BookRideCommand request, CancellationToken cancellationToken)
         {
             var user = await _unitOfWork.UserRepository.GetByIdAsync(request.UserId);
 
@@ -31,7 +31,7 @@ namespace BookingService.Application.Features.Rides.Commands.BookRide
                 throw new NotFoundException(nameof(User), request.UserId);
             }
 
-            var validator = new BookRideQueryValidator();
+            var validator = new BookRideCommandValidator();
             var validationResult = await validator.ValidateAsync(request);
 
             if (validationResult.Errors.Count > 0)

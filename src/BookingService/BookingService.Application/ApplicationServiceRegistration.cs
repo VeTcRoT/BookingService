@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using BookingService.Application.Interfaces.Services.Infrastructure;
+using BookingService.Application.Services;
+using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
 namespace BookingService.Application
@@ -9,6 +11,8 @@ namespace BookingService.Application
         {
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddMediatR(x => x.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+
+            services.AddScoped<ITicketService, TicketService>();
 
             return services;
         }

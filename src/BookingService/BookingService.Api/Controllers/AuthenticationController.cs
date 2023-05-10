@@ -1,6 +1,7 @@
 ﻿using BookingService.Api.Models.Auth;
 using BookingService.Application.Exceptions;
-using BookingService.Application.Interfaces.Persistence;
+using BookingService.Application.Interfaces.Services.Infrastructure;
+using BookingService.Domain.Interfaces.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;

@@ -2,8 +2,8 @@
 using BookingService.Application.Features.Rides.Commands.BookRide;
 using BookingService.Application.Features.Users.Commands.CreateUser;
 using BookingService.Application.Features.Users.Commands.UpdateUser;
-using BookingService.Application.Features.Users.Queries.GetUserById;
 using BookingService.Application.Features.Users.Queries.GetUserRides;
+using BookingService.Domain.Dtos;
 using BookingService.Domain.Entities;
 
 namespace BookingService.Application.Profiles
@@ -16,7 +16,7 @@ namespace BookingService.Application.Profiles
             CreateMap<Ride, UserRideDto>();
 
             CreateMap<User, CreateUserCommand>().ReverseMap();
-            CreateMap<User, CreateUserDto>().ReverseMap();
+            CreateMap<User, CreateUserResponseDto>().ReverseMap();
 
             CreateMap<User, UpdateUserCommand>().ReverseMap();
 

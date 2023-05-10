@@ -1,4 +1,4 @@
-﻿using BookingService.Application.Interfaces.Persistence;
+﻿using BookingService.Domain.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace BookingService.Persistence.Repositories

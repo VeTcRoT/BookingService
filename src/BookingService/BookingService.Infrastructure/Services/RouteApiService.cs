@@ -1,7 +1,7 @@
 ﻿using BookingService.Application.Exceptions;
 using BookingService.Application.Features.Rides.Commands.BookRide;
 using BookingService.Application.Features.Rides.Queries.GeAvailableRoutes;
-using BookingService.Application.Interfaces.Infrastructure;
+using BookingService.Application.Interfaces.Services.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using System.Text;
 using System.Text.Json;
@@ -18,12 +18,12 @@ namespace BookingService.Infrastructure.Services
             _httpClient = httpClient;
             _configuration = configuration;
         }
-        public async Task<RideConfirmationDto> BookRideAsync(BookRideQuery bookRideQuery)
+        public async Task<RideConfirmationDto> BookRideAsync(BookRideCommand bookRideQuery)
         {
             var serializedQuery = JsonSerializer.Serialize(bookRideQuery);
             var requestContent = new StringContent(serializedQuery, Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.PostAsync(_configuration["BookRideUri"], requestContent);
+            var response = await _httpClient.PostAsync(_configuration["RouteApi:BookRideUri"], requestContent);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -40,7 +40,7 @@ namespace BookingService.Infrastructure.Services
             var json = JsonSerializer.Serialize(routeSearchParams);
             var requestContent = new StringContent(json, Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.PostAsync(_configuration["GetAvailableRoutesUri"], requestContent);
+            var response = await _httpClient.PostAsync(_configuration["RouteApi:GetAvailableRoutesUri"], requestContent);
 
             if (!response.IsSuccessStatusCode)
             {

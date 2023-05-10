@@ -1,4 +1,4 @@
-﻿using BookingService.Application.Interfaces.Persistence;
+﻿using BookingService.Domain.Interfaces.Repositories;
 
 namespace BookingService.Persistence.Repositories
 {

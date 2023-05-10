@@ -1,6 +1,6 @@
 ﻿using BookingService.Domain.Entities;
 
-namespace BookingService.Application.Interfaces.Persistence
+namespace BookingService.Domain.Interfaces.Repositories
 {
     public interface IUserRepository : IBaseRepository<User> 
     {

@@ -4,8 +4,10 @@ namespace BookingService.Application.Exceptions
 {
     public class ValidationException : Exception
     {
-        public List<string> ValidationErrors { get; set; }
-
+        public List<string>? ValidationErrors { get; set; }
+        public ValidationException() { }
+        public ValidationException(string message) : base(message) { }
+        public ValidationException(string message, Exception inner) : base(message, inner) { }
         public ValidationException(ValidationResult validationResult)
         {
             ValidationErrors = new List<string>();

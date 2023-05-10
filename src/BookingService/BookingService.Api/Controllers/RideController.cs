@@ -19,20 +19,12 @@ namespace BookingService.Api.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet("getavailableroutes", Name = "GetAvailableRoutes")]
+        [HttpPost("getavailableroutes", Name = "GetAvailableRoutes")]
         [ProducesResponseType(200)]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult<IEnumerable<RouteDto>?>> GetAvailableRoutes(string from, string to, DateTime departureTime, int numberOfSeats)
+        public async Task<ActionResult<IEnumerable<RouteDto>?>> GetAvailableRoutes(GetAvailableRoutesQuery request)
         {
-            var query = new GetAvailableRoutesQuery()
-            {
-                From = from,
-                To = to,
-                DepartureTime = departureTime,
-                NumberOfSeats = numberOfSeats
-            };
-
-            var routes = await _mediator.Send(query);
+            var routes = await _mediator.Send(request);
 
             return Ok(routes);
         }
@@ -41,7 +33,7 @@ namespace BookingService.Api.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult<BookRideDto>> BookRide([FromBody] BookRideQuery bookRide)
+        public async Task<ActionResult<BookRideDto>> BookRide([FromBody] BookRideCommand bookRide)
         {
             var ticketCode = await _mediator.Send(bookRide);
             return Ok(ticketCode);
