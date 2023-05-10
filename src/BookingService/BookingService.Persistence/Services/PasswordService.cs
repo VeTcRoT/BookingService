@@ -2,16 +2,16 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace BookingService.Persistence.Models
+namespace BookingService.Persistence.Services
 {
-    public class PasswordHash : IPasswordHash
+    public class PasswordService : IPasswordService
     {
         private const int keySize = 64;
         private const int iterations = 200000;
         private HashAlgorithmName hashAlgorithm = HashAlgorithmName.SHA512;
-        public string HashPassword(string password, out byte[] salt)
+        public string HashPassword(string password, out string saltReturn)
         {
-            salt = RandomNumberGenerator.GetBytes(keySize);
+            var salt = RandomNumberGenerator.GetBytes(keySize);
 
             var hash = Rfc2898DeriveBytes.Pbkdf2(
                 Encoding.UTF8.GetBytes(password),
@@ -19,6 +19,8 @@ namespace BookingService.Persistence.Models
                 iterations,
                 hashAlgorithm,
                 keySize);
+
+            saltReturn = Convert.ToHexString(salt);
 
             return Convert.ToHexString(hash);
         }

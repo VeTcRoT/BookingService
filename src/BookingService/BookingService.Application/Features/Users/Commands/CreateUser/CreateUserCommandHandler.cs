@@ -10,9 +10,9 @@ namespace BookingService.Application.Features.Users.Commands.CreateUser
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private readonly IPasswordHash _passwordHash;
+        private readonly IPasswordService _passwordHash;
 
-        public CreateUserCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IPasswordHash passwordHash)
+        public CreateUserCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IPasswordService passwordHash)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
@@ -29,9 +29,9 @@ namespace BookingService.Application.Features.Users.Commands.CreateUser
 
             var mappedUser = _mapper.Map<User>(request);
 
-            var passwordHash = _passwordHash.HashPassword(request.Password, out byte[] salt);
+            var passwordHash = _passwordHash.HashPassword(request.Password, out string salt);
 
-            mappedUser.PasswordSalt = Convert.ToHexString(salt);
+            mappedUser.PasswordSalt = salt;
             mappedUser.PasswordHash = passwordHash;
 
             var user = await _unitOfWork.UserRepository.AddAsync(mappedUser);

@@ -15,9 +15,9 @@ namespace BookingService.Api.Controllers
     {
         private readonly IConfiguration _configuration;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IPasswordHash _passwordHash;
+        private readonly IPasswordService _passwordHash;
 
-        public AuthenticationController(IConfiguration configuration, IUnitOfWork unitOfWork, IPasswordHash passwordHash)
+        public AuthenticationController(IConfiguration configuration, IUnitOfWork unitOfWork, IPasswordService passwordHash)
         {
             _configuration = configuration;
             _unitOfWork = unitOfWork;

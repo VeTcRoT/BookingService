@@ -20,7 +20,6 @@ namespace BookingService.Api.Controllers
             _mediator = mediator;
         }
 
-        [AllowAnonymous]
         [HttpGet("{userId}", Name = "GetUserById")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]

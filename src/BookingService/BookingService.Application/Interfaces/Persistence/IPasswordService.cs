@@ -1,8 +1,8 @@
 ﻿namespace BookingService.Application.Interfaces.Persistence
 {
-    public interface IPasswordHash
+    public interface IPasswordService
     {
-        string HashPassword(string password, out byte[] salt);
+        string HashPassword(string password, out string salt);
         bool VerifyPassword(string password, string hash, string salt);
     }
 }
