@@ -32,7 +32,12 @@ namespace BookingService.Infrastructure.Services
 
             var content = await response.Content.ReadAsStringAsync();
 
-            return JsonSerializer.Deserialize<RideConfirmationDto>(content);
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+
+            return JsonSerializer.Deserialize<RideConfirmationDto>(content, options);
         }
 
         public async Task<IEnumerable<RouteDto>?> GetAvailableRoutesAsync(GetAvailableRoutesQuery routeSearchParams)
@@ -48,7 +53,12 @@ namespace BookingService.Infrastructure.Services
             }
             var content = await response.Content.ReadAsStringAsync();
 
-            return JsonSerializer.Deserialize<IEnumerable<RouteDto>>(content);
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+
+            return JsonSerializer.Deserialize<IEnumerable<RouteDto>>(content, options);
         }
     }
 }
