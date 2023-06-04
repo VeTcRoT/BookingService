@@ -4,6 +4,8 @@ using BookingService.Infrastructure;
 using BookingService.Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -29,6 +31,12 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen(options =>
 {
+    options.SwaggerDoc("V1", new OpenApiInfo
+                {
+                    Version = "V1",
+                    Title = "BookingService",
+                    Description = "BookingService Web Api"
+                });
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Scheme = "Bearer",
@@ -72,13 +80,27 @@ builder.Services.AddAuthentication(opt =>
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
+using (var scope = app.Services.CreateScope())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    var bookingServiceContext = scope.ServiceProvider.GetRequiredService<BookingServiceDbContext>();
+    if (!bookingServiceContext.Database.GetService<IRelationalDatabaseCreator>().Exists())
+    {
+        try
+        {
+            bookingServiceContext.Database.Migrate();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Migration has failed: {ex.Message}");
+        }
+    }
 }
 
-app.UseHttpsRedirection();
+
+app.UseSwagger();
+app.UseSwaggerUI(options => {
+            options.SwaggerEndpoint("/swagger/V1/swagger.json", "BookingService");
+        });
 
 app.UseRouting();
 
