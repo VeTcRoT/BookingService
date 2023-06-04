@@ -31,6 +31,12 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen(options =>
 {
+    options.SwaggerDoc("V1", new OpenApiInfo
+                {
+                    Version = "V1",
+                    Title = "BookingService",
+                    Description = "BookingService Web Api"
+                });
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Scheme = "Bearer",
@@ -92,7 +98,9 @@ using (var scope = app.Services.CreateScope())
 
 
 app.UseSwagger();
-app.UseSwaggerUI();
+app.UseSwaggerUI(options => {
+            options.SwaggerEndpoint("/swagger/V1/swagger.json", "BookingService");
+        });
 
 app.UseRouting();
 
